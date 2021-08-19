@@ -1,0 +1,28 @@
+query Area($id: ID!) {
+    area(id: $id) {
+        routes(sort: "order:asc") {
+            name,
+            color
+            order
+            buses {
+                name
+                latitude
+                longitude
+                positionAttributes
+                course
+                address
+                visible
+                __typename
+            }
+            stations {
+                id
+                name
+                lat
+                lng
+                __typename
+            }
+            __typename
+        }
+        __typename
+    }
+}
