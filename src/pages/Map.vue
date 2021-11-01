@@ -71,8 +71,6 @@ export default {
           lon: -6.7670677
         }
       },
-      sslId: '4',
-      havnarId: '1',
       buses: [],
       interval: null
     }

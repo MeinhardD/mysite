@@ -38,8 +38,8 @@
           text-color="secondary"
           size="sm"
           :options="[
-            {label: 'SSL', value: '5e46a32e3fb8db316cd76d54'},
-            {label: 'Havn', value: '5e4547b45ba3615020fe6fa9'}
+            {label: 'SSL', value: '4'},
+            {label: 'Havn', value: '1'}
           ]"
           @input="toggleId"
         />
@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       isDark: null,
-      id: '5e46a32e3fb8db316cd76d54'
+      id: '4'
     }
   },
   created () {

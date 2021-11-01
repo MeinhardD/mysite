@@ -1,4 +1,6 @@
 export default {
   failed: 'Gerðin miseydnaðist',
-  success: 'Gerðin eydnaðist'
+  success: 'Gerðin eydnaðist',
+  wishlist: 'Ynskilisti',
+  games: 'Spøl'
 }

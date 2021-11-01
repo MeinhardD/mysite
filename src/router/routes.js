@@ -16,6 +16,11 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/wishlist',
+    name: 'Wishlist',
+    component: () => import('pages/Wishlist.vue')
+  },
 
   // Always leave this as last one,
   // but you can also remove it
