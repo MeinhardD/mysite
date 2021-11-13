@@ -167,7 +167,7 @@ export default {
     },
     updateWishlist (wishlist, items) {
       for (const item of items) {
-        const category = item.category ? item.category : 'uncategorized'
+        const category = item.category ? item.category : this.$t('uncategorized')
         if (!wishlist[category]) wishlist[category] = []
         wishlist[category].push(item)
       }
@@ -189,7 +189,7 @@ export default {
     },
     updateItem (item) {
       const wishlist = this.wishlist
-      const category = item.category ? item.category : 'uncategorized'
+      const category = item.category ? item.category : this.$t('uncategorized')
       const index = wishlist[category].map(oldItem => oldItem.id).indexOf(item.id)
       wishlist[category][index] = item
       this.wishlist = wishlist
@@ -201,7 +201,7 @@ export default {
         .then(res => {
           if (res.data.success) {
             const wishlist = this.wishlist
-            if (!category) category = 'uncategorized'
+            if (!category) category = this.$t('uncategorized')
             const items = wishlist[category].filter(item => item.id !== id)
             wishlist[category] = items
             this.wishlist = wishlist

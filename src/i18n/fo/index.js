@@ -16,5 +16,6 @@ export default {
   category: 'Bólkur',
   cancel: 'Angra',
   item: 'Lut',
-  create_a_wishlist: 'Upprætta ein ynskilista'
+  create_a_wishlist: 'Upprætta ein ynskilista',
+  uncategorized: 'Uttan bólk'
 }

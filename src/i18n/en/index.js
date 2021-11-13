@@ -16,5 +16,6 @@ export default {
   category: 'Category',
   cancel: 'Cancel',
   item: 'Item',
-  create_a_wishlist: 'Create a wishlist'
+  create_a_wishlist: 'Create a wishlist',
+  uncategorized: 'Uncategorized'
 }

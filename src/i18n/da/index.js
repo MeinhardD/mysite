@@ -16,5 +16,6 @@ export default {
   category: 'Kategori',
   cancel: 'Anuller',
   item: 'Punkt',
-  create_a_wishlist: 'Opret en ønskeliste'
+  create_a_wishlist: 'Opret en ønskeliste',
+  uncategorized: 'Uden kategori'
 }
