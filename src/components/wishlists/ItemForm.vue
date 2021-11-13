@@ -53,7 +53,7 @@ export default {
     item: {
       type: Object,
       required: false,
-      default: () => {}
+      default: () => null
     },
     edit: {
       type: Boolean,
@@ -75,9 +75,11 @@ export default {
     }
   },
   mounted () {
-    if (this.item.label) this.label = this.item.label
-    if (this.item.link) this.link = this.item.link
-    if (this.item.category) this.category = this.item.category
+    if (this.item) {
+      if (this.item.label) this.label = this.item.label
+      if (this.item.link) this.link = this.item.link
+      if (this.item.category) this.category = this.item.category
+    }
   },
   methods: {
     submit () {
@@ -90,8 +92,8 @@ export default {
       if (this.link) data.append('link', this.link)
       if (this.category) data.append('category', this.category)
 
-      this.$axios
-        .post(`http://localhost/api/items/${this.edit ? 'update' : 'store'}`, data)
+      this.$wishlist
+        .post(`/items/${this.edit ? 'update' : 'store'}`, data)
         .then(res => {
           if (res.data.success) {
             console.log(res.data.item)

@@ -1,8 +1,26 @@
 <template>
   <div class="column content-center q-pa-md">
     <q-card class="container" flat bordered>
-      <q-card-section>
+      <q-card-section class="row">
+        <q-btn
+          unelevated
+          round
+          icon="link"
+          color="accent"
+          @click="copyLink"
+          style="margin: auto auto auto 0"
+        />
+
         <div class="text-h2 text-bold text-center">{{ $t('wishlist') }}</div>
+
+        <q-btn
+          unelevated
+          round
+          icon="edit"
+          color="accent"
+          @click="unlocking = true"
+          style="margin: auto 0 auto auto"
+        />
       </q-card-section>
       <q-card-section
         v-for="(list, category, categoryIndex) in wishlist"
@@ -34,7 +52,7 @@
                   @click="window.open(item.link, '_blank')"
                 />
               </q-item-section>
-              <q-item-section side>
+              <q-item-section v-if="key" side>
                 <q-btn
                   icon="edit"
                   flat
@@ -53,9 +71,9 @@
         </div>
       </q-card-section>
 
-      <q-separator inset />
+      <q-separator v-if="key" inset />
 
-      <q-card-actions align="center">
+      <q-card-actions v-if="key" align="center">
         <q-btn
           unelevated
           round
@@ -65,6 +83,11 @@
         />
       </q-card-actions>
     </q-card>
+    <q-dialog v-model="unlocking">
+      <keyhole-form
+        @unlock="password => { key = password; unlocking = false }"
+      />
+    </q-dialog>
     <q-dialog v-model="creating">
       <item-form
         :password="key"
@@ -84,10 +107,12 @@
 
 <script>
 import ItemForm from 'src/components/wishlists/ItemForm.vue'
+import KeyholeForm from 'src/components/wishlists/KeyholeForm.vue'
+import { copyToClipboard } from 'quasar'
 
 export default {
   name: 'Wishlist',
-  components: { ItemForm },
+  components: { ItemForm, KeyholeForm },
   data () {
     return {
       window: window,
@@ -96,7 +121,8 @@ export default {
       creating: false,
       editing: false,
       itemToEdit: null,
-      key: 'password'
+      unlocking: false,
+      key: null
       // wishlist: {
       //   games: [
       //     {
@@ -126,8 +152,8 @@ export default {
   },
   methods: {
     getWishlist () {
-      this.$axios
-        .get(`http://localhost/api/wishlists/${this.uniqueLink}`)
+      this.$wishlist
+        .get(`/wishlists/${this.uniqueLink}`)
         .then(res => {
           if (res.data.success) {
             const wishlist = {}
@@ -157,8 +183,8 @@ export default {
       this.editing = false
     },
     deleteItem (id, category) {
-      this.$axios
-        .delete(`http://localhost/api/items/${id}?password=${this.key}`)
+      this.$wishlist
+        .delete(`/items/${id}?password=${this.key}`)
         .then(res => {
           if (res.data.success) {
             const wishlist = this.wishlist
@@ -168,6 +194,13 @@ export default {
             this.wishlist = wishlist
           }
         })
+    },
+    copyLink () {
+      copyToClipboard(window.location)
+      this.$q.notify({
+        type: 'info',
+        message: 'You copied the link'
+      })
     }
   }
 }
