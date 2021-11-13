@@ -15,7 +15,7 @@ export default {
   link: 'Link',
   category: 'Kategori',
   cancel: 'Anuller',
-  item: 'Punkt',
+  item: 'Ønske',
   create_a_wishlist: 'Opret en ønskeliste',
   uncategorized: 'Uden kategori'
 }

@@ -7,7 +7,7 @@
       <q-input
         filled
         v-model="label"
-        :label="$t('label')"
+        :label="$t('label') + (!edit ? '*' : '')"
         color="accent"
       />
       <q-file

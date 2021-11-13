@@ -6,7 +6,7 @@ export default {
   hardware: 'Útgerð',
   external_hdd: 'Eksternur Harddiskur',
   password: 'Loyniorð',
-  create: 'Upprætta',
+  create: 'Stovna',
   edit: 'Broyt',
   unlock: 'Lat upp',
   update: 'Dagfør',
@@ -15,7 +15,8 @@ export default {
   link: 'Leinki',
   category: 'Bólkur',
   cancel: 'Angra',
-  item: 'Lut',
+  item: 'Ynski',
   create_a_wishlist: 'Upprætta ein ynskilista',
-  uncategorized: 'Uttan bólk'
+  uncategorized: 'Uttan bólk',
+  required: '*kravt'
 }
