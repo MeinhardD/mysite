@@ -58,8 +58,11 @@ export default {
       id: '4'
     }
   },
-  created () {
+  mounted () {
     this.isDark = this.$q.dark.isActive
+
+    const lang = this.$route.query.lang
+    if (this.$i18n.availableLocales.includes(lang)) this.$i18n.locale = lang
   },
   computed: {
     isMap () {
