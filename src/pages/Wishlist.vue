@@ -5,20 +5,22 @@
         <q-btn
           unelevated
           round
+          :size="$q.platform.is.mobile ? 'sm' : 'md'"
           icon="link"
           color="accent"
           @click="copyLink"
           style="margin: auto auto auto 0"
         />
 
-        <div class="text-h2 text-bold text-center">{{ $t('wishlist') }}</div>
+        <div class="text-h3 text-bold text-center">{{ $t('wishlist') }}</div>
 
         <q-btn
           unelevated
           round
-          icon="edit"
-          color="accent"
-          @click="unlocking = true"
+          :size="$q.platform.is.mobile ? 'sm' : 'md'"
+          :icon="key ? 'delete' : 'edit'"
+          :color="key ? 'negative' : 'accent'"
+          @click="key ? deleteWishlist() : unlocking = true"
           style="margin: auto 0 auto auto"
         />
       </q-card-section>
@@ -30,6 +32,20 @@
           <div class="text-h5">{{ $t(category) }}</div>
           <q-list>
             <q-item class="text-subtitle1" v-for="(item, itemIndex) in list" :key="'Item' + itemIndex">
+              <q-item-section v-if="key" side>
+                <q-btn
+                  icon="edit"
+                  flat
+                  color="primary"
+                  @click="itemToEdit = item; editing = true"
+                />
+                <q-btn
+                  icon="delete"
+                  flat
+                  color="negative"
+                  @click="deleteItem(item.id, item.category)"
+                />
+              </q-item-section>
               <q-item-section v-if="item.icon_name" avatar>
                 <q-img
                   :src="`http://localhost/images/${item.icon_name}`"
@@ -50,20 +66,6 @@
                   flat
                   color="pink"
                   @click="window.open(item.link, '_blank')"
-                />
-              </q-item-section>
-              <q-item-section v-if="key" side>
-                <q-btn
-                  icon="edit"
-                  flat
-                  color="primary"
-                  @click="itemToEdit = item; editing = true"
-                />
-                <q-btn
-                  icon="delete"
-                  flat
-                  color="negative"
-                  @click="deleteItem(item.id, item.category)"
                 />
               </q-item-section>
             </q-item>
@@ -158,6 +160,8 @@ export default {
           if (res.data.success) {
             const wishlist = {}
             this.wishlist = this.updateWishlist(wishlist, res.data.items)
+          } else {
+            this.$router.push({ name: 'Wishlists' })
           }
         })
     },
@@ -168,6 +172,15 @@ export default {
         wishlist[category].push(item)
       }
       return wishlist
+    },
+    deleteWishlist () {
+      this.$wishlist
+        .delete(`/wishlists/${this.uniqueLink}?password=${this.key}`)
+        .then(res => {
+          if (res.data.success) {
+            this.$router.push({ name: 'Wishlists' })
+          }
+        })
     },
     createItem (item) {
       const wishlist = this.wishlist

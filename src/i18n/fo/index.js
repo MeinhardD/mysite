@@ -4,5 +4,17 @@ export default {
   wishlist: 'Ynskilisti',
   games: 'Spøl',
   hardware: 'Útgerð',
-  external_hdd: 'Eksternur Harddiskur'
+  external_hdd: 'Eksternur Harddiskur',
+  password: 'Loyniorð',
+  create: 'Upprætta',
+  edit: 'Broyt',
+  unlock: 'Lat upp',
+  update: 'Dagfør',
+  label: 'Tekstur',
+  icon: 'Mynd',
+  link: 'Leinki',
+  category: 'Bólkur',
+  cancel: 'Angra',
+  item: 'Lut',
+  create_a_wishlist: 'Upprætta ein ynskilista'
 }

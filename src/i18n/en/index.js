@@ -4,5 +4,17 @@ export default {
   wishlist: 'Wishlist',
   games: 'Games',
   hardware: 'Hardware',
-  external_hdd: 'External HDD'
+  external_hdd: 'External HDD',
+  password: 'Password',
+  create: 'Create',
+  edit: 'Edit',
+  unlock: 'Unlock',
+  update: 'Update',
+  label: 'Label',
+  icon: 'Icon',
+  link: 'Link',
+  category: 'Category',
+  cancel: 'Cancel',
+  item: 'Item',
+  create_a_wishlist: 'Create a wishlist'
 }

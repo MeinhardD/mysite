@@ -5,14 +5,15 @@
         filled
         v-model="password"
         type="password"
-        label="Password"
+        :label="$t('password')"
         color="accent"
+        @keyup.enter="unlockWishlist"
       />
     </q-card-section>
     <q-card-actions align="center">
       <q-btn
         unelevated
-        label="unlock"
+        :label="$t('unlock')"
         color="accent"
         @click="unlockWishlist"
       />

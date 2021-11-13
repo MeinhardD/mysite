@@ -4,5 +4,17 @@ export default {
   wishlist: 'Ønskeliste',
   games: 'Spil',
   hardware: 'Udstyr',
-  external_hdd: 'Ekstern Harddisk'
+  external_hdd: 'Ekstern Harddisk',
+  password: 'Loyniorð',
+  create: 'Opret',
+  edit: 'Ændre',
+  unlock: 'Luk op',
+  update: 'Opdater',
+  label: 'Tekst',
+  icon: 'Billede',
+  link: 'Link',
+  category: 'Kategori',
+  cancel: 'Anuller',
+  item: 'Punkt',
+  create_a_wishlist: 'Opret en ønskeliste'
 }

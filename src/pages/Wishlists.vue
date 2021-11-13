@@ -2,21 +2,24 @@
   <div class="column content-center q-pa-md">
     <q-card class="container" flat bordered>
       <q-card-section>
-        <div class="text-h2 text-bold text-center">Create a wishlist</div>
+        <div class="text-h3 text-bold text-center">
+          {{ $t('create_a_wishlist') }}
+        </div>
       </q-card-section>
       <q-card-section>
         <q-input
           filled
           v-model="password"
           type="password"
-          label="Password"
+          :label="$t('password')"
           color="accent"
+          @keyup.enter="createWishlist"
         />
       </q-card-section>
       <q-card-actions align="center">
         <q-btn
           unelevated
-          label="create new"
+          :label="$t('create')"
           color="accent"
           @click="createWishlist"
         />

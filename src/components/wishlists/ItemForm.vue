@@ -1,44 +1,44 @@
 <template>
   <q-card>
-    <q-card-section class="text-h3 text-bold">
-      {{ edit ? 'Edit' : 'Create' }} Item
+    <q-card-section class="text-h4 text-bold">
+      {{ edit ? $t('edit') : $t('create') }} {{ $t('item') }}
     </q-card-section>
     <q-card-section class="q-gutter-md">
       <q-input
         filled
         v-model="label"
-        label="Label"
+        :label="$t('label')"
         color="accent"
       />
       <q-file
         filled
         v-model="icon"
-        label="Icon"
+        :label="$t('icon')"
         color="accent"
       />
       <q-input
         filled
         v-model="link"
-        label="Link"
+        :label="$t('link')"
         color="accent"
       />
       <q-input
         filled
         v-model="category"
-        label="Category"
+        :label="$t('category')"
         color="accent"
       />
     </q-card-section>
     <q-card-actions align="center">
       <q-btn
         flat
-        label="Cancel"
+        :label="$t('cancel')"
         color="accent"
         v-close-popup
       />
       <q-btn
         unelevated
-        :label="edit ? 'Edit' : 'Create'"
+        :label="edit ? $t('update') : $t('create')"
         color="accent"
         @click="submit"
       />
