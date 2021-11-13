@@ -37,8 +37,8 @@ export default {
   methods: {
     createWishlist () {
       if (this.password) {
-        this.$axios
-          .post('http://localhost/api/wishlists', { password: this.password })
+        this.$wishlist
+          .post('/wishlists', { password: this.password })
           .then(res => {
             if (res.data.success) {
               this.uniqueLink = res.data.unique_link
