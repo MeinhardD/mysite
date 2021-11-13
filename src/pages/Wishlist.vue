@@ -21,57 +21,70 @@
           :icon="key ? 'delete' : 'edit'"
           :color="key ? 'negative' : 'accent'"
           @click="key ? deleteWishlist() : unlocking = true"
+          :loading="key ? loadingListDelete : false"
           style="margin: auto 0 auto auto"
         />
       </q-card-section>
-      <q-card-section
-        v-for="(list, category, categoryIndex) in wishlist"
-        :key="'Category' + categoryIndex"
+      <div
+        v-if="loadingItems"
+        class="row justify-center q-pb-md"
       >
-        <div v-if="list.length > 0">
-          <div class="text-h5">{{ $t(category) }}</div>
-          <q-list>
-            <q-item class="text-subtitle1" v-for="(item, itemIndex) in list" :key="'Item' + itemIndex">
-              <q-item-section v-if="key" side>
-                <q-btn
-                  icon="edit"
-                  flat
-                  color="primary"
-                  @click="itemToEdit = item; editing = true"
-                />
-                <q-btn
-                  icon="delete"
-                  flat
-                  color="negative"
-                  @click="deleteItem(item.id, item.category)"
-                />
-              </q-item-section>
-              <q-item-section v-if="item.icon_name" avatar>
-                <q-img
-                  :src="`http://localhost/images/${item.icon_name}`"
-                  :alt="item.icon_name"
-                  no-default-spinner
-                  width="30px"
-                />
-              </q-item-section>
-              <q-item-section v-else avatar>
-                <q-icon name="memory" />
-              </q-item-section>
-              <q-item-section>
-                {{ item.label }}
-              </q-item-section>
-              <q-item-section v-if="item.link" side>
-                <q-btn
-                  icon="open_in_new"
-                  flat
-                  color="pink"
-                  @click="window.open(item.link, '_blank')"
-                />
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </div>
-      </q-card-section>
+        <q-spinner
+          color="accent"
+          size="lg"
+        />
+      </div>
+      <div v-else>
+        <q-card-section
+          v-for="(list, category, categoryIndex) in wishlist"
+          :key="'Category' + categoryIndex"
+        >
+          <div v-if="list.length > 0">
+            <div class="text-h5">{{ $t(category) }}</div>
+            <q-list>
+              <q-item class="text-subtitle1" v-for="(item, itemIndex) in list" :key="'Item' + itemIndex">
+                <q-item-section v-if="key" side>
+                  <q-btn
+                    icon="edit"
+                    flat
+                    color="primary"
+                    @click="itemToEdit = item; editing = true"
+                  />
+                  <q-btn
+                    icon="delete"
+                    flat
+                    color="negative"
+                    :loading="loadingItemDelete"
+                    @click="deleteItem(item.id, item.category)"
+                  />
+                </q-item-section>
+                <q-item-section v-if="item.icon_name" avatar>
+                  <q-img
+                    :src="`http://localhost/images/${item.icon_name}`"
+                    :alt="item.icon_name"
+                    no-default-spinner
+                    width="30px"
+                  />
+                </q-item-section>
+                <q-item-section v-else avatar>
+                  <q-icon name="memory" />
+                </q-item-section>
+                <q-item-section>
+                  {{ item.label }}
+                </q-item-section>
+                <q-item-section v-if="item.link" side>
+                  <q-btn
+                    icon="open_in_new"
+                    flat
+                    color="pink"
+                    @click="window.open(item.link, '_blank')"
+                  />
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </div>
+        </q-card-section>
+      </div>
 
       <q-separator v-if="key" inset />
 
@@ -124,7 +137,10 @@ export default {
       editing: false,
       itemToEdit: null,
       unlocking: false,
-      key: null
+      key: null,
+      loadingItems: false,
+      loadingListDelete: false,
+      loadingItemDelete: false
       // wishlist: {
       //   games: [
       //     {
@@ -154,6 +170,7 @@ export default {
   },
   methods: {
     getWishlist () {
+      this.loadingItems = true
       this.$wishlist
         .get(`/wishlists/${this.uniqueLink}`)
         .then(res => {
@@ -163,6 +180,7 @@ export default {
           } else {
             this.$router.push({ name: 'Wishlists' })
           }
+          this.loadingItems = false
         })
     },
     updateWishlist (wishlist, items) {
@@ -174,12 +192,14 @@ export default {
       return wishlist
     },
     deleteWishlist () {
+      this.loadingListDelete = true
       this.$wishlist
         .delete(`/wishlists/${this.uniqueLink}?password=${this.key}`)
         .then(res => {
           if (res.data.success) {
             this.$router.push({ name: 'Wishlists' })
           }
+          this.loadingListDelete = true
         })
     },
     createItem ({ item }) {
@@ -204,6 +224,7 @@ export default {
       this.editing = false
     },
     deleteItem (id, category) {
+      this.loadingItemDelete = true
       this.$wishlist
         .delete(`/items/${id}?password=${this.key}`)
         .then(res => {
@@ -213,6 +234,7 @@ export default {
             const items = wishlist[category].filter(item => item.id !== id)
             wishlist[category] = items
             this.wishlist = wishlist
+            this.loadingItemDelete = false
           }
         })
     },

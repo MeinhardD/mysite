@@ -21,6 +21,7 @@
           unelevated
           :label="$t('create')"
           color="accent"
+          :loading="loading"
           @click="createWishlist"
         />
       </q-card-actions>
@@ -34,12 +35,14 @@ export default {
   data () {
     return {
       password: null,
-      uniqueLink: null
+      uniqueLink: null,
+      loading: false
     }
   },
   methods: {
     createWishlist () {
       if (this.password) {
+        this.loading = true
         this.$wishlist
           .post('/wishlists', { password: this.password })
           .then(res => {
@@ -52,6 +55,7 @@ export default {
               type: res.data.success ? 'positive' : 'negative',
               message: res.data.message
             })
+            this.loading = false
           })
           .catch(err => console.error('Error', err))
       } else {

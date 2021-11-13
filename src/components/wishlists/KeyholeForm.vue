@@ -15,6 +15,7 @@
         unelevated
         :label="$t('unlock')"
         color="accent"
+        :loading="loading"
         @click="unlockWishlist"
       />
     </q-card-actions>
@@ -27,11 +28,13 @@ export default {
   data () {
     return {
       uniqueLink: this.$route.params.uniqueLink,
-      password: null
+      password: null,
+      loading: false
     }
   },
   methods: {
     unlockWishlist () {
+      this.loading = true
       this.$wishlist
         .post('/unlock', { unique_link: this.uniqueLink, password: this.password })
         .then(res => {
@@ -42,6 +45,7 @@ export default {
             type: res.data.success ? 'positive' : 'negative',
             message: res.data.message
           })
+          this.loading = false
         })
     }
   }

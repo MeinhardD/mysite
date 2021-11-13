@@ -40,6 +40,7 @@
         unelevated
         :label="edit ? $t('update') : $t('create')"
         color="accent"
+        :loading="loading"
         @click="submit"
       />
     </q-card-actions>
@@ -71,7 +72,8 @@ export default {
       label: null,
       icon: null,
       link: null,
-      category: null
+      category: null,
+      loading: false
     }
   },
   mounted () {
@@ -95,6 +97,7 @@ export default {
       if (this.link) data.append('link', this.link)
       if (this.category) data.append('category', this.category)
 
+      this.loading = true
       this.$wishlist
         .post(`/items/${this.edit ? 'update' : 'store'}`, data)
         .then(res => {
@@ -106,6 +109,11 @@ export default {
               this.$emit('submit', { item: res.data.item })
             }
           }
+          this.$q.notify({
+            type: res.data.success ? 'positive' : 'negative',
+            message: res.data.message
+          })
+          this.loading = false
         })
     }
   }
