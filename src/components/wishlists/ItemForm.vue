@@ -78,7 +78,10 @@ export default {
     if (this.item) {
       if (this.item.label) this.label = this.item.label
       if (this.item.link) this.link = this.item.link
-      if (this.item.category) this.category = this.item.category
+      if (this.item.category) {
+        this.category = this.item.category
+        this.oldCategory = this.item.category
+      }
     }
   },
   methods: {
@@ -97,7 +100,11 @@ export default {
         .then(res => {
           if (res.data.success) {
             console.log(res.data.item)
-            this.$emit('submit', res.data.item)
+            if (this.edit) {
+              this.$emit('submit', { item: res.data.item, category: this.oldCategory })
+            } else {
+              this.$emit('submit', { item: res.data.item })
+            }
           }
         })
     }

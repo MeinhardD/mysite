@@ -182,16 +182,24 @@ export default {
           }
         })
     },
-    createItem (item) {
+    createItem ({ item }) {
       const wishlist = this.wishlist
       this.wishlist = this.updateWishlist(wishlist, [item])
       this.creating = false
     },
-    updateItem (item) {
+    updateItem ({ item, category }) {
       const wishlist = this.wishlist
-      const category = item.category ? item.category : this.$t('uncategorized')
-      const index = wishlist[category].map(oldItem => oldItem.id).indexOf(item.id)
-      wishlist[category][index] = item
+      const oldCategory = category || this.$t('uncategorized')
+      const newCategory = item.category ? item.category : this.$t('uncategorized')
+      if (oldCategory === newCategory) {
+        const index = wishlist[oldCategory].map(oldItem => oldItem.id).indexOf(item.id)
+        wishlist[oldCategory][index] = item
+      } else {
+        wishlist[oldCategory] = wishlist[oldCategory].filter(oldItem => oldItem.id !== item.id)
+        if (wishlist[oldCategory].length === 0) delete wishlist[oldCategory]
+        if (!wishlist[newCategory]) wishlist[newCategory] = []
+        wishlist[newCategory].push(item)
+      }
       this.wishlist = wishlist
       this.editing = false
     },
